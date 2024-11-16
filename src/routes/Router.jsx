@@ -1,18 +1,34 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import HomeLayout from "../layouts/HomeLayout";
+import NewsLayout from "../layouts/NewsLayout";
+import AuthLayout from "../layouts/AuthLayout";
+import Section from "../components/Section";
+
 
 
 export const Router = createBrowserRouter([
     {
         path:'/',
-        element:<p>home</p>
+        element:<HomeLayout/>,
+        children: [
+          {
+            path:'/',
+            element:<Navigate to={'/category/01'}/>
+          },
+          {
+            path:'/category/:id',
+            element:<Section/>,
+            loader:({params})=>fetch(`https://openapi.programming-hero.com/api/news/category/${params.id}`)
+          }
+        ]
     },
     {
         path:'/news',
-        element:<p>News</p>
+        element:<NewsLayout/>
     },
     {
         path:'/auth',
-        element:<p>Login</p>
+        element:<AuthLayout/>
     },
     {
         path:'*',
