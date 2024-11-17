@@ -3,6 +3,8 @@ import HomeLayout from "../layouts/HomeLayout";
 import NewsLayout from "../layouts/NewsLayout";
 import AuthLayout from "../layouts/AuthLayout";
 import NewsList from "../components/NewsList";
+import Login from "../components/Login";
+import Register from "../components/Register";
 
 
 
@@ -29,7 +31,21 @@ export const Router = createBrowserRouter([
     },
     {
         path:'/auth',
-        element:<AuthLayout/>
+        element:<AuthLayout/>,
+        children: [
+          {
+            path:'/auth',
+            element:<Navigate to={'/auth/login'}/>
+          },
+          {
+            path: '/auth/login',
+            element: <Login/>
+          },
+          {
+            path: '/auth/register',
+            element: <Register/>
+          }
+        ]
     },
     {
         path:'*',
